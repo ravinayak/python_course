@@ -7,8 +7,8 @@
 # age = 40
 # print(age)
 
-# friend_age = 90
-# print(friend_age)
+friend_age = 90
+print(friend_age)
 
 # age = 35 # integer
 # PI = 3.14159 # float
