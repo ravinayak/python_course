@@ -1,3 +1,5 @@
+import json
+
 dict = {
 	'name': 'Joe',
 	'grades': [10, 20, 30, 20, 20],
@@ -278,4 +280,135 @@ double_square = DoubleSquare()
 # print(double_square.square_two())
 # print(double_square.square_three())
 # print(double_square.square_four())
-print(double_square.square_five())
+# print(double_square.square_five())
+
+friends_names = ['Rolf', 'Jose', 'Randy', 'Anna']
+
+def write_file(hello = 'Hello'):
+  file = open('data.txt', 'w')
+  if hello == 'Hello':
+    file.write('Hello, World!')
+  else:
+    for friend_name in friends_names:
+      file.write(friend_name + '\n')
+  file.close()
+
+def read_file():
+  file = open('data.txt', 'r')
+  lines = file.readlines()
+  file.close()
+
+  lines = [line.strip() for line in lines]
+  # print(f'Lines :: {lines}')
+
+write_file(hello = 'Hello')
+read_file()
+write_file(hello = 'Non')
+read_file()
+
+def read_csv():
+  file = open('data.csv', 'r')
+  lines = file.readlines()
+  file.close()
+  
+  csv_lines = [line.strip().split(',') for line in lines]
+  for csv_line in csv_lines:
+    for line in csv_line:
+      if line != '':
+        print(line.strip())
+  
+def write_csv():
+  file = open('data.csv', 'w')
+  friends = ['Rolf', 'Jose', 'Randy', 'Anna']
+  enemies = ['Jen', 'Sara', 'Randy']
+  for enemy in enemies:
+    file.write(f'{enemy}, ')
+  file.write('\n')
+  for friend in friends:
+    file.write(f'{friend}, ')
+  file.close()
+  
+# write_csv()
+# read_csv()
+
+def read_context_manager_csv():
+  with open('data.csv', 'r') as file:
+    lines = file.readlines()
+    
+  print(' \nI am in read context manager \n')
+
+  csv_lines = [line.strip().split(',') for line in lines]
+  for csv_line in csv_lines:
+    for line in csv_line:
+      if line != '':
+        print(line.strip())
+        
+def write_context_manager_csv():
+  with open('data.csv', 'w') as file:
+    friends = ['Rolf', 'Jose', 'Randy', 'Anna']
+    enemies = ['Jen', 'Sara', 'Randy']
+    for enemy in enemies:
+      file.write(f'{enemy}, ')
+    file.write('\n')
+    for friend in friends:
+      file.write(f'{friend}, ')
+      
+# write_context_manager_csv()
+# read_context_manager_csv()
+
+def write_json():
+  friends = ['Joe', 'Randy', 'Black']
+  dict = {
+    'friends': [
+      {
+        'name': 'Joe',
+        'age': 25,
+      },
+      {
+        'name': 'Randy',
+        'age': 30,
+      },
+      {
+        'name': 'Black',
+        'age': 35,
+      }
+    ]
+  }
+  with open('data.json', 'w') as file:
+    # json.dump(friends, file)
+    json.dump(dict, file)
+    
+def read_json():
+  with open('data.json', 'r') as file:
+    print(json.load(file))
+    
+# write_json()
+# read_json()
+
+class SerializableObject:
+  def __init__(self, rate, amount):
+    self.rate = rate
+    self.amount = amount
+
+  def to_dict(self):
+    return { "object": { "rate": self.rate, "amount" : self.amount } }
+
+def write_string_json():
+  friends = '{"friends": {"name": "Joe", "age": 25}}'
+  serializable_object =  SerializableObject(25, 50).to_dict()
+  print(serializable_object)
+  print(json.dumps(serializable_object))
+  with open('data_str.json', 'w') as file:
+    json.dump(friends, file, indent=2)
+    
+def read_string_json():
+  friends = {}
+  with open('data_str.json', 'r') as file:
+    friends = json.load(file)
+    print(friends)
+  print(friends.__class__)
+  friends_str = '{"friends": {"name": "Black", "age": 50}}'
+  print(json.loads(friends_str))
+    
+write_string_json()
+read_string_json()
