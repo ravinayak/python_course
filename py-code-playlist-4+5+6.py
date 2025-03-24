@@ -410,5 +410,5 @@ def read_string_json():
   friends_str = '{"friends": {"name": "Black", "age": 50}}'
   print(json.loads(friends_str))
     
-write_string_json()
-read_string_json()
+# write_string_json()
+# read_string_json()
