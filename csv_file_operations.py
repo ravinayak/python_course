@@ -13,7 +13,7 @@ def process_user_choice(user_choice):
     book_details = enter_book_info()
     add_book(book_details, file_name)
   elif user_choice == 'b':
-    get_all_books(file_name)
+    get_all_books(file_name, True)
   elif user_choice == 'c':
     book_details = enter_book_info()
     mark_book_as_read(book_details, file_name)
