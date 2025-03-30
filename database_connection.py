@@ -10,8 +10,11 @@ class DatabaseConnection:
     return self.connection
     
   def __exit__(self, exec_type, exec_val, exec_tb):
-    if exec_type or exec_val or exec_val:
-      print(f' Exception in database connection :: Type -- {exec_type}, Value -- {exec_val}, Traceback -- {exec_tb}')
+    try:
+      if exec_type or exec_val or exec_val:
+       print(f' Exception in database connection :: Type -- {exec_type}, Value -- {exec_val}, Traceback -- {exec_tb}')
+       self.connection.close()
+      self.connection.commit()
       self.connection.close()
-    self.connection.commit()
-    self.connection.close()
+    except Exception as e:
+    	print('Exception caught')

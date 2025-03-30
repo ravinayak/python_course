@@ -1,3 +1,4 @@
+import sqlite3
 from database_connection import DatabaseConnection
 
 def create_table(db_name):
@@ -26,10 +27,16 @@ def get_all_books(db_name):
 def add_book(db_name, book):
   with(DatabaseConnection(db_name)) as connection:
     cursor = connection.cursor()
+    try:
+      cursor.execute('Insert into books VALUES(?, ?, ?)', (book['name'], book['author'], 0))
+      print(f' Inserted into books table :: {book}')
+    except sqlite3.IntegrityError as e:
+      print(f' Exception :: {e}')
+      print(' Insertion failed')
+    except Exception as e:
+      print(f' Error :: {e}')
+      print(' Insertion failed')
 
-    cursor.execute('Insert into books VALUES(?, ?, ?)', (book['name'], book['author'], 0))
-    print(f' Inserted into books table :: {book}')
-  
   get_all_books
   
 def mark_book_as_read(db_name, book):
