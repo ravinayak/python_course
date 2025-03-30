@@ -7,8 +7,9 @@ def _process_file(file_name):
   file_data = ''
   with(open(file_name, 'r')) as file:
     file_data = [line.strip().split(',') for line in file.readlines()]
+
   return [
-		{ 'name': file_data_split[0].strip(), 'author': file_data_split[1].strip(), 'read': file_data_split[2].strip()}
+		{ 'name': file_data_split[0].strip(), 'author': file_data_split[1].strip(), 'read': file_data_split[2].strip() }
 		for file_data_split in file_data
 	]
 
