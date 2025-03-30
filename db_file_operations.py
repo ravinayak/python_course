@@ -6,7 +6,7 @@ db_name = 'data.db'
 
 create_table(db_name)
 
-def process_user_choice(user_choice):
+def process_user_choice(user_choice: str):
 	if user_choice == 'a':
 		book_details = enter_book_info()
 		add_book(db_name, book_details)

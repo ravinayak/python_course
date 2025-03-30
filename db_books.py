@@ -1,7 +1,10 @@
 import sqlite3
 from database_connection import DatabaseConnection
+from typing import List, Dict, Union
 
-def create_table(db_name):
+Book = Dict[str, Union[str, int]]
+
+def create_table(db_name: str) -> None:
   with(DatabaseConnection(db_name)) as connection:
     cursor = connection.cursor()
 
@@ -9,7 +12,7 @@ def create_table(db_name):
     
   return None
     
-def get_all_books(db_name):
+def get_all_books(db_name: str) -> List[Book]:
   with(DatabaseConnection(db_name)) as connection:
     cursor = connection.cursor()
 
@@ -24,7 +27,7 @@ def get_all_books(db_name):
   print(f' Books :: {books}')
   return books
 
-def add_book(db_name, book):
+def add_book(db_name: str, book: Book) -> List[Book]:
   with(DatabaseConnection(db_name)) as connection:
     cursor = connection.cursor()
     try:
@@ -39,7 +42,7 @@ def add_book(db_name, book):
 
   get_all_books
   
-def mark_book_as_read(db_name, book):
+def mark_book_as_read(db_name: str, book: Book) -> List[Book]:
   with(DatabaseConnection(db_name)) as connection:
     cursor = connection.cursor()
 
@@ -49,7 +52,7 @@ def mark_book_as_read(db_name, book):
 
   get_all_books
 
-def delete_book(db_name, book):
+def delete_book(db_name: str, book: Book) -> List[Book]:
   print(f' Deleting book :: {book}')
   with(DatabaseConnection(db_name)) as connection:
     cursor = connection.cursor()
