@@ -1,0 +1,77 @@
+
+def friends_upper():
+    friends = ['Rolf', 'Hose', 'Rahul', 'Sam', 'Kim']
+    for friend in friends:
+        try:
+            greeting = yield
+            print(f'{greeting}, How are you doing today? {friend}')
+        except StopIteration:
+            pass
+
+def greet(friend_upper):
+    friend_upper.send(None)
+    while True:
+        greet = yield
+        friend_upper.send(greet)
+
+friend_upper = friends_upper()
+g = greet(friend_upper)
+g.send(None)
+
+# send is used to send values to a generator, it differs from next in 2 ways:
+# 1. next does not pass any value to the generator, simply calls the next yield
+# 2. send raises StopIterationError only the last call to send where as next
+#	 does not raise StopIterationError on the last call, it raises error on the 
+#	 (last + 1)th call
+#
+# def gen():
+#     for i in range(5):
+#         val = yield i
+#         print(f"Received: {val}")
+        
+# g = gen()
+# next(g)        # Start the generator
+# g.send("one")  # Works
+# g.send("two")  # Works
+# g.send("three")
+# g.send("four")
+# g.send("five")  # ❌ Raises StopIteration
+
+# Why does send("five") raise StopIteration?
+
+# Because after processing the final value, the generator function completes — there are
+# no more yields left. When you do send("five"), Python:
+# 	1.	Sends "five" into the last paused yield
+# 	2.	Runs the code after it (print(...))
+# 	3.	Finds that the generator is done (loop ends)
+# 	4.	Python implicitly raises StopIteration
+
+# So the last send() is the one that raises — not the next one.
+
+# But next() behaves differently:
+
+# If you had just used:
+
+# g = gen()
+# print(next(g))  # 0
+# print(next(g))  # 1
+# print(next(g))  # 2
+# print(next(g))  # 3
+# print(next(g))  # 4
+# print(next(g))  # ❌ Raises StopIteration
+
+# The StopIteration is raised after the last yielded value — cleanly and as expected.
+# There’s no value being injected, so no confusion.
+
+# | Generator Status     | `next()` Behavior                                   | `send(value)` Behavior                                                    |
+# |----------------------|-----------------------------------------------------|---------------------------------------------------------------------------|
+# | Mid-execution        | Advances to the next `yield`, returns yielded value | Sends `value` into current `yield`, resumes execution to next `yield`     |
+# | At final `yield`     | Returns final value, then raises `StopIteration`    | Sends `value` into final `yield`, resumes execution, then raises `StopIteration` |
+# 						   on next call
+# | After completion     | Raises `StopIteration` immediately                  | Raises `StopIteration` immediately (may cause `RuntimeError` if uncaught) |
+
+
+greetings = ['Hi', 'Hello', 'Hola', 'Jola']
+for greet in greetings:
+    print(greet)
+    g.send(greet)
