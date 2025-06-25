@@ -4,10 +4,10 @@ dict = {
   'average': lambda grades: sum(grades) / len(grades)
 }
 
-# print(dict['name'])
-# print(dict['grades'])
-# print(dict['average'](dict['grades']))
-# print(dict['average'])
+print(dict['name'])
+print(dict['grades'])
+print(dict['average'](dict['grades']))
+print(dict['average'])
 
 class Student:
   def __init__(self, name, grades):
@@ -178,13 +178,13 @@ class RisingStudent:
   
     return sum(self.grades) / len(self.grades)
   
-rising_student = RisingStudent('Rolf')
-print(f"Rising Student :: {rising_student.name} -- {rising_student.grades}")
+    rising_student = RisingStudent('Rolf')
+    print(f"Rising Student :: {rising_student.name} -- {rising_student.grades}")
 
-try:
-  print(f"Add Grade :: {rising_student.add_grade(10)}")
-except NotImplementedError:
-  print("Method not yet implemented")
+    try:
+      print(f"Add Grade :: {rising_student.add_grade(10)}")
+    except NotImplementedError:
+      print("Method not yet implemented")
 
-print(f"Average Grade :: {rising_student.average_grade((2, 3))}")
+    print(f"Average Grade :: {rising_student.average_grade((2, 3))}")
  
