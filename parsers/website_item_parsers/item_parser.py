@@ -41,7 +41,7 @@ class ParsedItem:
   LINK_LOCATOR = 'article.product_pod div.image_container a'
   CONTENT_LOCATOR = 'article.product_pod div.image_container a img'
   RATING_LOCATOR = 'article.product_pod p.star-rating'
-  LI_ITEMS_LOCATOR = 'article.product_pod p.star-rating li.icon-star'
+  P_ITEMS_LOCATOR = 'article.product_pod p.star-rating i.icon-star'
   H3_TITLE = 'article.product_pod h3 a'
   PRICE_LOCATOR = 'article.product_pod div.product_price p.price_color'
   
@@ -68,7 +68,7 @@ class ParsedItem:
 
   @property
   def li_items(self):
-    li_items_arr = self.soup.select(ParsedItem.LI_ITEMS_LOCATOR)
+    li_items_arr = self.soup.select(ParsedItem.P_ITEMS_LOCATOR)
     li_items_val = [li_item.string for li_item in li_items_arr]
     print(li_items_val)
     return li_items_val
@@ -91,9 +91,10 @@ class ParsedItem:
   @property
   def rating(self):
     classes = self.soup.select_one(ParsedItem.RATING_LOCATOR).get('class', [])
-    rating_val = filter(lambda x: x != 'star-rating', classes)
-    print(rating_val)
-    return rating_val
+    rating_val_iterator = filter(lambda x: x != 'star-rating', classes)
+    rating = list(rating_val_iterator)[0]
+    print(rating)
+    return rating
 
   @property
   def list_properties(self):
@@ -105,5 +106,6 @@ class ParsedItem:
     self.link
     self.title
 
-parsed_item = ParsedItem.new(page: ITEM_HTML)
+parsed_item = ParsedItem(page= ITEM_HTML)
+parsed_item.list_properties
   
