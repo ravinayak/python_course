@@ -1,7 +1,9 @@
 import re
+import logging
 from urllib.parse import urljoin
 from parsers.books_with_pages_parsers.locators.book_locators import LINK_LOCATOR, NAME_LOCATOR, RATING_LOCATOR, PRICE_LOCATOR, STOCK_AVAILABILITY
 
+logger = logging.getLogger('pagescraper.book_parser')
 class BookParser:
     
     def __init__(self, book, url: str):
@@ -19,6 +21,7 @@ class BookParser:
         
     @property
     def rating(self):
+        logger.info(' Accessing Rating for book')
         locator = self.book.select_one(RATING_LOCATOR)
         if not locator:
             return None
@@ -27,6 +30,7 @@ class BookParser:
         
     @property
     def price(self):
+        logger.info(' Accessing Price for book')
         pattern = r'£(\d+\.?\d+)'
         locator = self.book.select_one(PRICE_LOCATOR)
         if not locator:
@@ -37,6 +41,7 @@ class BookParser:
         
     @property
     def link(self):
+        logger.info(' Accessing Link for book')
         locator = self.book.select_one(LINK_LOCATOR)
         if not locator:
             return None
@@ -45,6 +50,7 @@ class BookParser:
         
     @property
     def name(self):
+        logger.info(' Accessing Name for book')
         locator = self.book.select_one(NAME_LOCATOR)
         if not locator:
             return None
@@ -52,6 +58,7 @@ class BookParser:
         
     @property
     def stock(self):
+        logger.info(' Accessing Stock Availability for book')
         locator = self.book.select_one(STOCK_AVAILABILITY)
         if not (locator or locator.text):
             return None

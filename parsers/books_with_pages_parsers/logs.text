@@ -1,0 +1,296 @@
+28-06-2025 13:47:53 INFO     [app.py:56] Fetching books for page 1
+28-06-2025 13:47:53 INFO     [all_books_parser.py:17]  Accessing all books for the page
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:53 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:53 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:53 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:53 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:53 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:54 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:54 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:54 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:54 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:54 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:54 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:54 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:54 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:54 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:54 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:54 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:54 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:54 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:54 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:54 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:47:54 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:47:54 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:47:54 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:47:54 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:47:54 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:08 INFO     [app.py:40] Finding 5 cheapest books
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:08 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:08 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:08 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:08 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:08 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:08 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:08 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:08 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:08 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:08 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:08 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:08 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:08 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:08 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:08 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:08 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:12 INFO     [app.py:47] Finding 5 Most Highly rated books
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:12 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:12 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:12 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:12 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:12 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:12 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:12 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:12 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:12 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:12 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:12 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:12 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:12 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:12 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:12 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:12 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [app.py:56] Fetching books for page 2
+28-06-2025 13:48:14 INFO     [all_books_parser.py:17]  Accessing all books for the page
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book
+28-06-2025 13:48:14 INFO     [book_parser.py:53]  Accessing Name for book
+28-06-2025 13:48:14 INFO     [book_parser.py:44]  Accessing Link for book
+28-06-2025 13:48:14 INFO     [book_parser.py:33]  Accessing Price for book
+28-06-2025 13:48:14 INFO     [book_parser.py:24]  Accessing Rating for book
+28-06-2025 13:48:14 INFO     [book_parser.py:61]  Accessing Stock Availability for book

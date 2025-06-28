@@ -1,7 +1,10 @@
+import logging
+import os
 from parsers.books_with_pages_parsers.pages.all_pages import AllPages
 from parsers.books_with_pages_parsers.parsers.book_parser import BookParser
 from parsers.books_with_pages_parsers.parsers.all_books_parser import AllBooksParser
 from typing import List
+
 
 URL_TEMPLATE = 'https://books.toscrape.com/catalogue/page-{}.html'
 BOOK_URL = 'https://books.toscrape.com/'
@@ -11,6 +14,15 @@ RATING_MAP = {
 
 TOTAL_PAGES = AllPages(url = BOOK_URL).total_pages
 PAGE_GEN = (page_num for page_num in range(TOTAL_PAGES))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_FILE = os.path.join(SCRIPT_DIR, 'logs.text')
+
+logging.basicConfig(format = '%(asctime)s %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
+                   datefmt = '%d-%m-%Y %H:%M:%S',
+                   level=logging.INFO,
+                   filename=LOG_FILE)
+
+logger = logging.getLogger('pagescraper')
 
 def menu():
     return (
@@ -25,12 +37,14 @@ def menu():
 	)
 
 def cheapest(books: List[BookParser]):
+    logger.info(f'Finding 5 cheapest books')
     five_cheapest_books = sorted(books, key = lambda book: book.price)[:5]
     for index, book in enumerate(five_cheapest_books, start = 1):
         print(f'{index}. {book}')
     return five_cheapest_books
     
 def rated(books: List[BookParser]):
+    logger.info(f'Finding 5 Most Highly rated books')
     five_highest_rated = sorted(books, key = lambda book: RATING_MAP.get(book.rating, 1), reverse = True)[:5]
     for index, book in enumerate(five_highest_rated, start = 1):
         print(f'{index}. {book}')
@@ -39,6 +53,7 @@ def rated(books: List[BookParser]):
 def next_books():
     current_page = next(PAGE_GEN) + 1
     print(f' \n\n**************** Books on Page {current_page} ****************\n\n')
+    logger.info(f'Fetching books for page {current_page}')
     books = AllBooksParser(url = URL_TEMPLATE.format(current_page + 1)).books
     print(books, end = "\n\n")
     return books
