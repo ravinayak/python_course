@@ -1,0 +1,1 @@
+ALL_QUOTE_LOCATORS = 'div.row div.col-md-8 div.quote'
