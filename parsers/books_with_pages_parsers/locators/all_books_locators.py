@@ -1,0 +1,2 @@
+ALL_BOOKS_PAGER_LOCATOR = 'div.page_inner div.row div.col-sm-8.col-md-9 section div div ul.pager li.current'
+ALL_BOOKS_LOCATORS = 'div.page_inner div.row div.col-sm-8.col-md-9 section div ol.row li.col-xs-6.col-sm-4.col-md-3'
