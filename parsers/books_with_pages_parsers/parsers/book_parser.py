@@ -55,7 +55,30 @@ class BookParser:
         if not locator:
             return None
         return locator.get('title', None)
-        
+    
+    # .string vs. .text
+    # .string: This attribute is a bit strict. It will only return a value if
+    # the tag contains a single child, and that child is a piece of text
+    # (a NavigableString in BeautifulSoup terms). If a tag contains other tags
+    # or more than one text node, .string will be None. For example, with
+    # <p class="price_color">£51.77</p>, the <p> tag has only one child
+    # (the text £51.77), so .string works perfectly.
+
+    # .text: This attribute is more general. It finds all the text within a tag
+    # and all its children, and joins it together into a single string. Looking at
+    # the stock availability HTML:
+    
+    # <p class="instock availability">
+    # <i class="icon-ok"></i>
+
+    #     In stock
+
+    # </p>
+    # The <p> tag has multiple children: an <i> tag and a text node containing "In stock"
+    # (with some whitespace). Because there's more than just a single string, locator.string
+    # returns None. However, locator.text will correctly extract the text, which you can then
+    # clean up with .strip(). So, your use of .text here is the right approach.
+
     @property
     def stock(self):
         logger.info(' Accessing Stock Availability for book')
