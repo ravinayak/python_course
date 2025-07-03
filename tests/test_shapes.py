@@ -1,8 +1,55 @@
 import pytest
-from shapes import Rectangle, Square
+from playlists.shapes import Rectangle, Square
 
 # To print statements from test methods, use "-s" option
 # pytest tests/test_shapes.py -s
+
+# Here’s a step-by-step breakdown of what happens when you run
+# pytest on your test_shapes.py file:
+
+# 1. Test Discovery
+# First, pytest scans your project for things that look like tests.
+# By default, it looks for:
+
+# Files named test_*.py or *_test.py. Your file tests/test_shapes.py
+# matches this.
+# Inside those files, it looks for classes prefixed with Test
+# (like your TestRectangle and TestSquare) and functions prefixed
+# with test_.
+# 2. Class Instantiation and Test Execution
+# This is the key part of your question. When pytest finds a class
+# like TestRectangle, it does not just create one single object for
+# the whole class. Instead, to ensure tests are completely isolated
+# from each other, it follows this lifecycle for each test method inside
+# the class:
+
+# Create a New Instance: pytest creates a fresh instance of the TestRectangle
+# class.
+# Run Setup (if present): It looks for special setup methods. It sees
+# setup_method and runs it on the new instance. This is where self.my_rectangle
+# gets created in your first two tests.
+# Run the Test Method: It calls the actual test method (e.g., test_area())
+# on that instance.
+# Run Teardown (if present): After the test method finishes
+# (whether it passes, fails, or errors), pytest calls the teardown_method for
+# cleanup.
+# This entire cycle repeats for test_perimeter(), test_area_using_fixture(),
+# and every other test method in the class. This guarantees that the state
+# from one test (e.g., if you were to change self.my_rectangle.width) cannot
+# accidentally affect the next test.
+
+# 3. The Role of Fixtures
+# For your tests like test_area_using_fixture(self, my_rectangle), pytest
+# does something slightly different but with the same goal:
+
+# When pytest sees that a test method requests an argument (my_rectangle)
+# that matches the name of a function decorated with @pytest.fixture, it
+# runs that fixture function first.
+# The value returned by the fixture (return Rectangle(30, 50)) is then
+# passed directly into the test method as an argument.
+# Fixtures are the more modern and powerful way to handle setup in pytest.
+# They make dependencies explicit and are more flexible than
+# setup_method/teardown_method.
 
 class TestRectangle:
 	# Any method defined inside a class, including a pytest fixture, must accept self as its first parameter.

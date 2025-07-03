@@ -1,4 +1,4 @@
-from users import get_users_from_db
+from playlists.users import get_users_from_db
 from unittest import mock
 from os import sys
 

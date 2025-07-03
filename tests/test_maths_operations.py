@@ -65,7 +65,7 @@ import pytest
 # is not a good solution. We should move all the application code to main
 # repository folder
 
-from maths_operations import add, multiply, divide, subtract
+from playlists.maths_operations import add, multiply, divide, subtract
 
 
 def test_divide_by_zero_error():
