@@ -23,4 +23,4 @@
 def find_matching_friend(friends, matcher):
 	return [friend for friend in friends if matcher(friend)]
  
-print(__name__)
+print(f'Find :: {__name__}')

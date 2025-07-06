@@ -18,4 +18,4 @@ def save_to_file(content):
 	with open('file_to_save.txt', 'r') as file:
 		print(file.readlines())
   
-print(__name__)
+print(f'File Operations :: {__name__}')
