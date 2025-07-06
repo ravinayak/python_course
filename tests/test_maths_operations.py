@@ -167,8 +167,8 @@ def test_subtract(capsys):
 # skips/deselects every other test)
 # PYTHONPATH=. pytest -m 'not slow' (runs all tests except those tests which have
 # been marked as slow)
-@pytest.mark.slow
-def test_subtract_marked_slow(reason = 'to test custom markings'):
+@pytest.mark.slow(reason = 'to test custom markings')
+def test_subtract_marked_slow():
     x = 5
     y = 2
     assert subtract(x, y) == 3

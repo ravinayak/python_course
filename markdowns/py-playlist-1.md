@@ -7,8 +7,8 @@
 6.  Integers and floating point are 2 types of numbers - Integers are whole numbers, ex: 3, 4, 4.15 - these are the 2 types of numbers
 7.  Variable can be re-assigned since its value can vary - by the very meaning of the term variable
 8.  Division can be of 2 types:
-    a. float_division = 8/3 = 2.66666
-    b. integer_division = 8 // 3 = 2
+    a. float_division = 8/3 = 2.66666, by default, division results ALWAYS in floating point
+    b. integer_division = 8 // 3 = 2, if you want integer result for division, use "//"
 9.  Modulo operator = % => 4%2 = 0, 5%2 = 1
 10. Data Types in Python:
     a. Numbers
