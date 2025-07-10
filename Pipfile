@@ -9,6 +9,9 @@ requests = "*"
 selenium = "*"
 flask = "*"
 pytest = "*"
+asyncio = "*"
+aiohttp = "*"
+unsync = "*"
 
 [dev-packages]
 
