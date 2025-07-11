@@ -75,3 +75,59 @@ greetings = ['Hi', 'Hello', 'Hola', 'Jola']
 for greet in greetings:
     print(greet)
     g.send(greet)
+    
+    
+def greet():
+    while True:
+        # Here we receive the data
+        name = yield()
+        message = f'Hi! {name}'
+        print(f'greet Generator yielding message :: {message}')
+        print('************************************************************')
+        
+def friend_name():
+    # Create a generator object
+	g = greet()
+	# TypeError: can't send non-None value to a just-started generator
+	# This error occurs because a generator function needs to be "primed" before
+ 	# you can send data into it.
+
+	# When you create a generator object (e.g., g = greet()), the code inside the
+ 	# function has not yet run.
+	# To start it, you must call next(g) or g.send(None). This runs the code up to the
+ 	# very first yield expression and then pauses the generator there.
+	# Only after it's paused at a yield can it accept a value from a subsequent .send() call.
+	
+	# Prime the generator here by calling g.send(None). This executes greet() generator 'g'
+	# upto the very 1st yield and pauses it there, so that every subsequent g.send(x) calls
+	# will reach the yield and the value will be accepte
+	g.send(None)
+	while True:
+		# This is where it receives data when the method is called
+		# with a parameter
+		# yield can return a value when called with 'next', it can
+		# also consume a value when called without any parameter,
+		# this is an example of when it is called without any parameter
+		# and it consumes data sent to the generator object through
+		# 'send' called on the object
+  
+		# f_gen.send(None) primes this generator and reaches this line
+		# of code and pauses at the yield. When we send a value to this
+		# generator, it is yielded and g.send(name) sends this value to
+		# to the greet() generator 'g', which has already been primed at
+		# line number 24. yield of 'g' is paused at yield and can accept
+		# any values sent to it
+		name = yield()
+		print('************************************************************')
+		print(f'friend_name generator - Received Name :: {name}')
+		g.send(name)
+
+friends = ['Rat', 'Jat', 'Sat', 'Mon']
+
+f_gen = friend_name()
+
+# This is where we prime the generator
+f_gen.send(None)
+
+for friend in friends:
+	f_gen.send(friend)
