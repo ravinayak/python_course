@@ -524,3 +524,295 @@ Causes:
 print(f'{greeting} {friend}')
 
 ```
+
+✅ No, you cannot use await in a function that is not declared with async def.
+
+Trying to use await in a regular def function will result in a SyntaxError.
+
+⸻
+
+```
+def regular_function():
+    await some_coroutine()  # ❌ Invalid
+
+# SyntaxError: 'await' outside async function
+```
+
+Python requires that any use of await must be inside an async def function — this is enforced at the syntax level by the parser.
+
+⸻
+
+✅ Correct Usage
+
+```
+async def my_async_function():
+    await some_coroutine()
+```
+
+And then you run it via:
+
+```
+import asyncio
+asyncio.run(my_async_function())
+```
+
+🧠 Why This Restriction Exists
+• await only makes sense in the context of a coroutine.
+• The event loop must manage the paused/resumed state of the function, which requires it to be async def.
+• Regular def functions return values immediately and can’t suspend execution.
+
+⸻
+
+✅ TL;DR
+
+```
+Question                                                       Answer
+--------------                                                 --------------
+1. Can you use await inside a regular def function?            ❌ No — it’s a syntax error
+2. What kind of function can use await?                        ✅ Only async def functions
+3. Why?                                                        Because only async def functions are coroutines
+                                                               that can pause/resume under control of the event loop
+```
+
+#### without create_task, can we run multiple coroutines at the same time, meaning if we simply await 2 co routines without creating tasks for them, will they run concurrerntly?
+
+Great question — you’re digging into a key concept in Python’s asyncio: what makes coroutines run concurrently?
+
+⸻
+
+🔑 Short Answer
+
+❌ No, if you await two coroutines sequentially without using create_task() or gather(), they will not run concurrently.
+
+They will run one after the other, just like synchronous code — because await waits for the first to finish before moving to the next.
+
+```
+import asyncio
+
+async def task1():
+    print("Start task1")
+    await asyncio.sleep(1)
+    print("End task1")
+
+async def task2():
+    print("Start task2")
+    await asyncio.sleep(1)
+    print("End task2")
+
+async def main():
+    await task1()  # 👈 waits until task1 is fully done
+    await task2()  # 👈 starts only after task1 is done
+
+asyncio.run(main())
+```
+
+Output:
+
+```
+Start task1
+End task1
+Start task2
+End task2
+```
+
+⏱ Total time: ~2 seconds → Sequential execution
+
+Concurrent Execution Without create_task: Use asyncio.gather
+
+```
+async def main():
+    await asyncio.gather(task1(), task2())  # ✅ runs concurrently
+
+# OR, more explicitly:
+# t1 = task1()
+# t2 = task2()
+# await asyncio.gather(t1, t2)
+```
+
+Output:
+
+```
+Start task1
+Start task2
+End task1
+End task2
+```
+
+⏱ Total time: ~1 second → Concurrent execution
+
+✅ Or Use asyncio.create_task (Explicit task scheduling)
+
+```
+async def main():
+    t1 = asyncio.create_task(task1())
+    t2 = asyncio.create_task(task2())
+    await t1
+    await t2
+```
+
+✅ TL;DR
+
+```
+
+Pattern                                         Concurrent?          Notes
+----------------------------------------        --------------      ------------------
+1. await task1(); await task2()                    ❌ No                Runs one after the other
+
+2. await asyncio.gather(task1(), task2())          ✅ Yes               Best for launching coroutines together
+
+3. create_task + await                             ✅ Yes               Lower-level, used for long-lived tasks
+
+
+```
+
+🧠 Final Note:
+
+```
+await = wait for one thing
+
+asyncio.gather / create_task = start multiple things, then await them together
+
+```
+
+### Let’s walk through a complete, detailed example of using the unsync library to run:
+
+    •	Synchronous functions
+    •	Asynchronous coroutines
+    •	CPU-bound functions (processes)
+    •	All in parallel
+
+We’ll show:
+• How to declare each type
+• What each returns (UnsyncFuture)
+• How to access the results
+• What’s happening under the hood
+
+🧠 Overview
+
+```
+Type of Task                    Decorator Syntax                Backed by                   Returns
+--------------------------      --------------------------      --------------------        ----------------
+
+Sync I/O-bound (default)        @unsync                         ThreadPoolExecutor          UnsyncFuture
+CPU-bound (heavy compute)       @unsync(process=True)           ProcessPoolExecutor         UnsyncFuture
+Async coroutine                 @unsync on async def            asyncio event loop          UnsyncFuture
+
+```
+
+✅ Step 2: Full Example
+
+```
+from unsync import unsync
+import time
+import asyncio
+import math
+
+# --- Threaded: I/O-style sleep ---
+@unsync
+def sleep_task(name):
+    time.sleep(1)
+    return f"Done sleeping: {name}"
+
+# --- Async: asyncio-style task ---
+@unsync
+async def async_task(name):
+    await asyncio.sleep(1)
+    return f"Done async: {name}"
+
+# --- Process: CPU-bound task ---
+@unsync(process=True)
+def cpu_task(x):
+    # Simulate CPU-intensive operation
+    return f"CPU result: sqrt({x}) = {math.sqrt(x)}"
+
+# --- Run all tasks together ---
+def main():
+    futures = [
+        sleep_task("Threaded"),       # Threaded function
+        async_task("Async"),          # Async coroutine
+        cpu_task(1000000),            # CPU-bound process
+    ]
+
+    # These are all UnsyncFuture objects
+    for f in futures:
+        print(f"Type: {type(f)}")     # Shows <class 'unsync.future.UnsyncFuture'>
+
+    # Wait for all to complete and collect results
+    results = [f.result() for f in futures]
+    print("\nResults:")
+    for r in results:
+        print(r)
+
+if __name__ == '__main__':
+    main()
+```
+
+✅ Output
+
+```
+Type: <class 'unsync.future.UnsyncFuture'>
+Type: <class 'unsync.future.UnsyncFuture'>
+Type: <class 'unsync.future.UnsyncFuture'>
+
+Results:
+Done sleeping: Threaded
+Done async: Async
+CPU result: sqrt(1000000) = 1000.0
+```
+
+✔️ Each task runs concurrently:
+• The sleep_task runs in a thread.
+• The async_task runs on the async event loop.
+• The cpu_task runs in a separate process.
+
+They all return an UnsyncFuture, which supports:
+
+```
+Method / Property                                   Meaning
+-----------------------------                       -----------------------------------------
+1. .result()                                        Wait and return the result (blocking)
+
+2. .done()                                          True if completed
+
+3. .exception()                                     Returns exception if raised
+
+4. .add_done_callback(fn)                           Call when future completes
+
+```
+
+🔍 Under the Hood
+
+@unsync
+• On def: runs in ThreadPoolExecutor
+• On async def: runs on asyncio event loop
+• On def with process=True: runs in ProcessPoolExecutor
+
+🧠 Bonus: Non-blocking Access with .add_done_callback
+
+```
+f = sleep_task("Ram")
+f.add_done_callback(lambda fut: print("Callback:", fut.result()))
+```
+
+You can even use fut.result(timeout=...) to control blocking behavior.
+
+✅ Summary Table of Unsync Usage
+
+```
+
+What You Want                                   Decorator                       Returns                 Runs In
+-----------------------------------------       ----------------------          -----------------       ----------------------
+1. Async coroutine                              @unsync on async def            UnsyncFuture            asyncio event loop
+
+2. I/O-style blocking (e.g., time.sleep)        @unsync on def                  UnsyncFuture            ThreadPoolExecutor
+
+3. Heavy computation                            @unsync(process=True)           UnsyncFuture            ProcessPoolExecutor
+
+```
+
+✅ TL;DR
+
+• unsync simplifies concurrency without managing threads, event loops, or futures manually.
+• All functions return UnsyncFuture regardless of backend.
+• .result() blocks until completion and returns the result.
+• All tasks run concurrently, giving performance and simplicity.
