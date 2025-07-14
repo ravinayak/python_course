@@ -371,3 +371,73 @@ total becomes 30, count becomes 2, average becomes 15.0.
 The coroutine yields 15.0 back to the caller and pauses.
 The caller receives 15.0 and prints it.
 This cycle continues, with the coroutine maintaining its state (total and count) across multiple send calls, which is something a normal function cannot do.
+
+```
+-> Coroutine received: 20 is printed.
+total becomes 30, count becomes 2, average becomes 15.0.
+The coroutine yields 15.0 back to the caller and pauses.
+The caller receives 15.0 and prints it. This cycle continues, with the coroutine maintaining its state (`total` and `count`) across multiple `send` calls, which is something a normal function cannot do.
+
+---
+```
+
+**A function can be async and a generator at the same time**
+
+## Asynchronous Generators (`async def` + `yield`)
+
+Since Python 3.6, a function **can** be both `async` and a generator. This powerful feature, called an **asynchronous generator**, allows you to `await` asynchronous operations and then `yield` a result in a sequence.
+
+This is perfect for streaming data that requires an async call for each chunk (e.g., fetching pages from a web API).
+
+### How It Works
+
+- It is defined with `async def`.
+- It uses `yield` to produce values.
+- It can use `await` to pause for other coroutines.
+- It is consumed using an `async for` loop.
+
+### Example
+
+Here is an asynchronous generator that counts down, waiting for one second between each number it yields.
+
+```python
+import asyncio
+
+async def async_countdown(n):
+    """
+    An asynchronous generator that counts down from n,
+    waiting 1 second between each yield.
+    """
+    print("-> Countdown started!")
+    while n > 0:
+        await asyncio.sleep(1)  # Pauses for an async operation
+        yield n                 # Yields a value
+        n -= 1
+    print("-> Countdown finished!")
+
+async def main():
+    # You consume an async generator with `async for`
+    print("Starting the async for loop...")
+    async for number in async_countdown(3):
+        print(f"   Received number: {number}")
+    print("Async for loop finished.")
+
+# Run the main coroutine
+asyncio.run(main())
+```
+
+**Output:**
+
+```
+Starting the async for loop...
+-> Countdown started!
+   Received number: 3
+   Received number: 2
+   Received number: 1
+-> Countdown finished!
+Async for loop finished.
+```
+
+```
+
+```
