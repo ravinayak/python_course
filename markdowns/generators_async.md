@@ -1,6 +1,6 @@
 ```
-Concept							✅ await?			✅ next()?					Notes
--------------					-------------		-------------				  ------------
+Concept							✅ await?			    ✅ next()?					Notes
+-------------					-------------		    -------------				  ------------
 
 1. def + yield						❌					✅							Regular generators
 
@@ -381,4 +381,146 @@ Type						Reusable?						 Notes
 2. Generator				❌ No							One-shot, must recreate
 
 3. Iterator					❌ No							Usually one-shot
+```
+
+### Explanation of the following Code which uses await with a generator object
+
+```
+from collections import deque
+from types import coroutine
+
+friends = deque(['Ram', 'Sita', 'Laxman', 'Shatrughan', 'Bharat', 'Hanuman'])
+
+@coroutine
+def friend_upper():
+    while friends:
+        friend = friends.popleft().upper()
+        greeting = yield
+        print(f'{greeting} {friend}')
+
+async def greet(g):
+    await g
+
+greeter = greet(friend_upper())
+greeter.send(None)
+greeter.send('Hello')
+greeter.send('Hi')
+greeter.send('Hey')
+greeter.send('What')
+greeter.send('Why')
+```
+
+How is a generator (via @coroutine) being awaited in await g?
+
+The short answer is:
+
+Because @coroutine turns a generator into an awaitable coroutine — by giving it a **await**() method under the hood.
+
+⸻
+
+🧠 Let’s unpack this step by step
+
+✅ Code Recap:
+
+```
+from collections import deque
+from types import coroutine
+
+friends = deque(['Ram', 'Sita', 'Laxman', 'Shatrughan', 'Bharat', 'Hanuman'])
+
+@coroutine
+def friend_upper():
+    while friends:
+        friend = friends.popleft().upper()
+        greeting = yield
+        print(f'{greeting} {friend}')
+```
+
+You’re using:
+
+```
+@coroutine
+```
+
+from:
+
+```
+from types import coroutine
+```
+
+from types import coroutine
+
+```
+This decorator transforms a generator-based coroutine into something that can be used with await.
+```
+
+⸻
+
+✅ What does @coroutine do?
+
+It marks the generator function so that it behaves like an awaitable object — that is:
+• It adds a **await**() method to the generator object.
+• This makes it legal to use with await.
+
+So this line:
+
+```
+await g
+```
+
+works, because:
+• g is the generator returned by friend_upper()
+• @coroutine makes g.**await**() available
+• Python’s event loop knows how to drive **await**() step-by-step
+
+This is how asyncio used to work before async def/await syntax was introduced (i.e., Python 3.4 and earlier Python 3.5 styles).
+
+⸻
+
+🔬 Under the Hood: What’s Happening
+
+```
+
+@coroutine
+def friend_upper():
+...
+
+```
+
+Becomes:
+
+```
+def friend_upper():
+...
+friend_upper = types.coroutine(friend_upper)
+
+```
+
+Internally, this creates a generator object with a . **await**() method that delegates to the generator itself using yield from.
+
+⸻
+
+✅ What Happens During Execution?
+
+```
+
+greeter = greet(friend_upper())
+
+```
+
+    •	friend_upper() returns a generator (but marked as awaitable)
+    •	greet() is a coroutine that awaits this generator
+
+```
+
+greeter.send('Hello') # greeting = 'Hello'
+
+```
+
+Causes:
+
+```
+
+print(f'{greeting} {friend}')
+
 ```
