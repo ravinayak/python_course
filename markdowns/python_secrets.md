@@ -438,6 +438,190 @@ Starting the async for loop...
 Async for loop finished.
 ```
 
+### is a coroutine always defined using async?
+
+Great question!
+
+🧠 No, a coroutine in Python is not always defined using async def — though that is the modern and preferred way.
+
+There are two types of coroutines in Python:
+
+⸻
+
+✅ 1. Modern Coroutines — using async def (Python 3.5+)
+
+These are what most people mean when they say “coroutine” today.
+
 ```
+async def say_hi():
+    return "Hello"
+
+coro = say_hi()
+print(type(coro))  # <class 'coroutine'>
+```
+
+You can await these:
+
+```
+import asyncio
+asyncio.run(say_hi())
+```
+
+✅ 2. Generator-based Coroutines — using @types.coroutine (Legacy Style)
+
+Before async def, coroutines were built with yield + @coroutine.
+
+```
+from types import coroutine
+
+@coroutine
+def legacy_coro():
+    yield
+    return 42
+
+c = legacy_coro()
+print(type(c))  # <class 'generator'>
+```
+
+These behave like coroutines, but are actually generators with a special **await**() method under the hood.
+
+They can be awaited too:
+
+```
+async def main():
+    result = await legacy_coro()
+    print(result)
+
+import asyncio
+asyncio.run(main())
+```
+
+🔍 Summary Table
+
+```
+
+Definition Style                    Awaitable?              Common Today?                   Underlying Type
+-----------------                   -----------------       ----------------------------    -----------------------------
+
+1. async def                        ✅ Yes                  ✅ Yes                          coroutine
+
+2. def + yield + @coroutine         ✅ Yes                  ⚠️ Rare                         generator with __await__()
+
+3. def + yield (no decorator)       ❌ No                   ✅ Yes (but not a coroutine)    generator
+
+
+```
+
+✅ TL;DR
+
+    •	A coroutine is not always defined with async def
+    •	But in modern Python, you should always use async def unless you’re writing low-level async libraries
+    •	@coroutine is still useful for creating awaitable wrappers around generators, but it’s mostly legacy
+
+### 🧠 What Is an Event Loop?
+
+The event loop is a mechanism that waits for tasks (coroutines, I/O events, timers, etc.) to be ready, and then runs them one at a time in a loop — cooperatively, not in parallel.
+
+Think of it like a scheduler that:
+• Keeps track of what needs to run
+• Runs whatever is ready without blocking
+• Suspends tasks that are waiting (e.g., sleeping, I/O)
+• Resumes tasks when their data is ready
+
+⸻
+
+🧱 Analogy
+
+🕹️ Imagine a single-threaded robot that:
+• Checks all its tasks in a list
+• Runs each task until it hits an “await”
+• Puts it aside and goes to the next ready task
+• Comes back later when the paused task can continue
+
+⸻
+
+✅ Basic Event Loop Flow 1. You define one or more coroutines (async def) 2. You submit them to the event loop 3. The loop starts running and manages when each coroutine is allowed to run next 4. When a coroutine awaits, it’s paused 5. The event loop resumes it later when it’s ready
+
+⸻
+
+🧪 Example of Event Loop in Action
+
+```
+import asyncio
+
+async def say_hello():
+    await asyncio.sleep(1)
+    print("Hello")
+
+async def say_world():
+    await asyncio.sleep(1)
+    print("World")
+
+async def main():
+    await asyncio.gather(say_hello(), say_world())
+
+asyncio.run(main())  # ← This starts the event loop
+```
+
+What Happens:
+• asyncio.run(main()) → starts the event loop
+• main() awaits two coroutines concurrently
+• Event loop sleeps for 1 second, then prints both
+
+⸻
+
+🔁 How to Think About It
+
+```
+You Call…                                           What It Does
+------------------------                            ---------------------------------------------------
+asyncio.run(...)                                    Starts and manages the event loop automatically
+
+await coro()                                        Pauses until the result is ready
+
+asyncio.gather(...)                                 Runs multiple coroutines concurrently
+
+await asyncio.sleep(n)                              Suspends for n seconds without blocking
+```
+
+🧠 Behind the Scenes
+
+Python uses selectors under the hood (e.g., epoll, kqueue) to:
+• Monitor file/network/socket events
+• Schedule future tasks (via call_later, sleep)
+• Resume paused coroutines efficiently
+
+The event loop is single-threaded and non-blocking — meaning it can handle thousands of tasks as long as none of them blocks.
+
+⸻
+
+🚫 What Blocks the Event Loop?
+
+Any sync or blocking call — like:
+• time.sleep()
+• open().read() (for big files)
+• Long CPU work
+
+Use:
+• await asyncio.sleep()
+• asyncio.to_thread(...)
+• Or delegate CPU-heavy work to ProcessPoolExecutor
+
+⸻
+
+✅ TL;DR — Event Loop Summary
+
+```
+Concept                 Summary
+----------------        -------------------------------------------------------------------
+What it is              A task scheduler that runs and suspends coroutines
+
+What it runs            Coroutines, tasks, futures, callbacks
+
+When it runs            On asyncio.run(), or when manually started
+
+How it switches         When a coroutine hits await, the loop picks the next ready task
+
+Why it’s useful         Efficient concurrency without threads or blocking
 
 ```

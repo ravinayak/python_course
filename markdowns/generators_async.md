@@ -1,3 +1,5 @@
+### Python Async Await Generators Coroutine
+
 ```
 Concept							✅ await?			    ✅ next()?					Notes
 -------------					-------------		    -------------				  ------------
@@ -978,3 +980,21 @@ Use Case                                Use next()                  Use send(Non
 • You must use next() or send(None) to prime a generator (first step)
 • Use send(value) only after priming, when the generator is paused at name = yield
 • ⚠️ Never use send(value) on a just-started generator — you’ll get a TypeError
+
+✅ Summary Chart
+
+| Task Type                   | Use `asyncio`? | Use Threads?                                  | Notes                                             |
+| --------------------------- | -------------- | --------------------------------------------- | ------------------------------------------------- |
+| Network requests            | ✅ Yes         | 🚫 Not needed unless using blocking libraries |
+| File I/O                    | ⚠️ No          | ✅ Yes                                        | Use `asyncio.to_thread()` or `ThreadPoolExecutor` |
+| CPU-bound tasks             | ❌ No          | ✅ Use Process Pool                           | Use `multiprocessing` or `ProcessPoolExecutor`    |
+| Mixed I/O (files + network) | ✅ with care   | ✅ use threads for files                      | Use async for network, threads for blocking ops   |
+
+✅ Final Recommendations
+
+| Scenario                          | Tool                                          |
+| --------------------------------- | --------------------------------------------- |
+| Web scraping, API calls           | `asyncio` + `aiohttp`                         |
+| Read/write CSV, JSON, logs        | `asyncio.to_thread()` or `ThreadPoolExecutor` |
+| Heavy file parsing or computation | `ProcessPoolExecutor` (CPU-bound)             |
+| Want simplicity and flexibility   | Use `unsync` to combine all styles            |
