@@ -816,3 +816,165 @@ What You Want                                   Decorator                       
 • All functions return UnsyncFuture regardless of backend.
 • .result() blocks until completion and returns the result.
 • All tasks run concurrently, giving performance and simplicity.
+
+### Can we prime a coroutine by using next()?
+
+✅ Yes — but only for regular generator-based coroutines, not async def coroutines.
+
+Let’s break it down very clearly, because it depends entirely on the kind of coroutine you’re talking about:
+
+✅ 1. Generator-based coroutine (@coroutine + yield)
+
+Yes, you can prime it using next() — because it’s still a generator under the hood.
+
+```
+from types import coroutine
+
+@coroutine
+def gen_coro():
+    print("Primed")
+    yield "Paused here"
+
+g = gen_coro()
+
+print(next(g))  # ✅ works: "Primed" then yields "Paused here"
+```
+
+🔍 Why this works:
+• @coroutine transforms a generator into an awaitable coroutine, but it’s still a generator object.
+• So next(g) and g.send(...) still work.
+• await g also works.
+
+❌ 2. Native coroutine (async def)
+
+❌ No, you cannot use next() on a coroutine defined with async def.
+
+```
+async def native_coro():
+    print("Inside")
+    return 42
+
+c = native_coro()
+
+next(c)  # ❌ TypeError: 'coroutine' object is not an iterator
+```
+
+🔍 Why this fails:
+• Native coroutines (created with async def) are not iterators.
+• They must be awaited (await c) or wrapped in an asyncio task.
+
+🧠 Summary Table
+
+```
+Type of Function                Can you next() it?              Can you await it?
+-----------------               ----------------------          --------------------------
+
+1. def + yield                  ✅ Yes                           ❌ No
+
+2. @coroutine + yield           ✅ Yes                          ✅ Yes
+
+3. async def                    ❌ No                           ✅ Yes
+
+4. async def + yield            ❌ No (not iterable)            ❌ No (async for) only
+
+```
+
+✅ Final Verdict
+
+You can prime a coroutine with next() only if it’s a generator-based coroutine, such as one decorated with @coroutine.
+You cannot use next() on a coroutine created via async def.
+
+#### so for most generators, we can use next/send interchangeably ?
+
+Excellent question — and the short answer is:
+
+✅ Yes, for most generators, you can use .next() and .send(None) interchangeably — but there are important nuances you should know.
+
+Let’s break it down clearly and precisely:
+
+⸻
+
+✅ When next() and send(None) Are Equivalent
+
+🔁 Basic generator:
+
+```
+def my_gen():
+    yield "step 1"
+    yield "step 2"
+
+g = my_gen()
+
+print(next(g))        # ✅ "step 1"
+print(g.send(None))   # ✅ "step 2" — works like next()
+```
+
+📌 send(None) is exactly the same as next() when:
+• The generator is waiting at a bare yield
+• You don’t want to inject any actual data
+
+⸻
+
+❗ When next() and send(None) Are Not Interchangeable
+
+🔸 Case 1: First call to a generator with yield = (expression)
+
+```
+def my_gen():
+    name = yield "What's your name?"
+    yield f"Hello, {name}"
+
+g = my_gen()
+
+print(next(g))         # ✅ primes the generator, yields "What's your name?"
+print(g.send("Alice")) # ✅ sends "Alice" into the generator
+```
+
+❌ But this will fail:
+
+```
+g = my_gen()
+g.send("Alice")  # ❌ TypeError: can't send non-None value to a just-started generator
+```
+
+You must prime the generator first using next() or send(None).
+
+⸻
+
+🔸 Case 2: When you want to inject a value into the generator
+
+Then send(...) is the only option:
+
+```
+def echo():
+    while True:
+        val = yield
+        print(f"Received: {val}")
+
+g = echo()
+next(g)         # ✅ primes to first `yield`
+g.send("Hello") # ✅ sends "Hello" into the generator
+```
+
+Calling next(g) here again would just send None, which isn’t useful if you’re expecting real data.
+
+⸻
+
+🧠 Summary Table
+
+```
+Use Case                                Use next()                  Use send(None)              Use send(value)
+
+1. Prime a new generator                ✅ Yes                      ✅ Yes                      ❌ No
+
+2. Resume at a bare yield               ✅ Yes                      ✅ Yes                      ⚠️ Only if value is None
+
+3. Pass value to yield expression       ❌ No                       ❌ No                       ✅ Yes
+
+```
+
+✅ TL;DR
+• next() is shorthand for send(None)
+• You must use next() or send(None) to prime a generator (first step)
+• Use send(value) only after priming, when the generator is paused at name = yield
+• ⚠️ Never use send(value) on a just-started generator — you’ll get a TypeError
