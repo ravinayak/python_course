@@ -44,6 +44,12 @@
 #     print(f'Executed task3 in sequence :: {res3}')
     
 #     print('Creating tasks and awaiting them allows us complete control over their sequencing')
+# 	  print('However remember that the moment we create a task, it is NOT JUST CREATED, it is immediately scheduled for running')
+#	  print('Unlike coroutine object which has to be invoked to schedule execution, we dont have to invoke anything for tasks to schedule')
+#	  print('If we create 2 tasks, one after the other, they will be created in sequence and scheduled for running immediately')
+#	  print('1st task will run 1st, but if it async sleeps or async waits like in a network call (remember async version of the
+# 			 sleep or network request because they are non-blocking), then it will give up the event loop, and the 2nd
+# 	         will take its place and start running')
     
 # asyncio.run(func())
 
