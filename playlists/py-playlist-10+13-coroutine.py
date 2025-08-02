@@ -33,3 +33,47 @@ for day in weekdays:
 	print(f'Activity :: {activity}')
 	print()
 print(f'**********************************\n')
+
+import asyncio
+from types import coroutine
+
+# @coroutine
+# async def gen_fib():
+#     a = 1
+#     b = 1
+#     fib = 1
+#     while True:
+#         yield fib
+#         fib = a + b
+#         a, b = b, fib
+        
+# async def main():
+#     fib = gen_fib()
+#     for _ in range(10):
+#         res = await fib.asend(None)
+#         print(f'Res :: {res}')
+        
+# asyncio.run(main())
+
+@coroutine
+async def gen_fib(x):
+    a = 1
+    b = 1
+    fib = { None: None, 1: 1, 2: 1 }
+    for x in range(3, 1000):
+        fib[x] = a + b
+        a, b = b, fib[x]
+    
+    res = None
+    while True:
+        res = yield fib[res]
+        
+async def main():
+    z = [ 1, 3, 5, 8, 10, 11, 12, 13, 25, 35, 65, 100, 110, 200, 250]
+    fib = gen_fib(None)
+    await fib.asend(None)
+    for x in z:
+        res = await fib.asend(x)
+        print(f'{x}th Fibonnaci number :: {res}')
+        
+asyncio.run(main())
