@@ -11,20 +11,20 @@ print(f'Python"s Module search path - Path :: {sys.path}\n')
 
 # Scenario 1: Module-level import
 print("=== Scenario 1: import my_app.components.utils ===")
-import my_app.components.utils
+import module_import_sys_path_python_path.my_app.components.utils
 
 # Local function with same name
 def ab():
     return "This is local function ab"
 
 # No collision - different namespaces
-print("utils.ab():", my_app.components.utils.ab())
+print("utils.ab():", module_import_sys_path_python_path.my_app.components.utils.ab())
 print("local ab():", ab())
 print()
 
 # Scenario 2: From import
 print("=== Scenario 2: from my_app.components import utils ===")
-from my_app.components import utils
+from module_import_sys_path_python_path.my_app.components import utils
 
 # Still no collision - utils is a namespace
 print("utils.ab():", utils.ab())
@@ -33,7 +33,7 @@ print()
 
 # Scenario 3: Direct function import - POTENTIAL COLLISION!
 print("=== Scenario 3: from my_app.components.utils import ab ===")
-from my_app.components.utils import ab as imported_ab  # Using alias to avoid collision
+from module_import_sys_path_python_path.my_app.components.utils import ab as imported_ab  # Using alias to avoid collision
 
 # Now we have both imported_ab and local ab
 print("imported_ab():", imported_ab())
