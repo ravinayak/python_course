@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
+import sys
 """
 Test file to demonstrate different import scenarios and name collisions
 """
+"""
+Current working directory is always included in Python's module search path
+: sys.path as an empty string
+"""
+print(f'Python"s Module search path - Path :: {sys.path}\n')
 
 # Scenario 1: Module-level import
 print("=== Scenario 1: import my_app.components.utils ===")
