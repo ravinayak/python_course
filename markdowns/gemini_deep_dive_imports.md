@@ -166,8 +166,61 @@ The current working directory is added to sys.path. This is often where your top
 
 Python then searches sys.path for app.py as a module (e.g., it looks for a file named app.py or a directory named app with an **init**.py inside it, depending on the exact path).
 
-**name** is Set to the Module's Full Dotted Path:
-Inside app.py, **name** will be set to its full, qualified module name (e.g., if app.py is part of a package structure like my_project/app.py, and my_project is on sys.path, **name** might be my_project.app). If app.py is in the current working directory and that directory is not a package, **name** might still be app. The key is that Python attempts to resolve its module path.
+Let's break down why `python -m package.subpackage.module` works for relative imports, even though `__name__` is still `"__main__"`.
+
+## Understanding `python -m`
+
+The core purpose of `python -m <module_name>` is to run a module by its dotted path as found within Python's `sys.path`. It explicitly sets up the module's package context.
+
+## When you run `python -m package.subpackage.module`:
+
+**Module Resolution**: Python searches `sys.path` for a module named `package.subpackage.module`. This means it expects:
+
+- A directory `package` on `sys.path` (or within a directory on `sys.path`)
+- Inside that `package` directory, a subdirectory `subpackage`
+- Inside `subpackage`, a file named `module.py`
+
+## The Key Distinction: `__name__` vs `__package__`
+
+**`__name__` Value**: When you execute a module directly using `python -m`, that module's `__name__` is specifically set to `"__main__"` for the duration of its execution as the top-level script. This behavior is by design. The `__main__` guard (`if __name__ == "__main__":`) relies on this to determine if a script is being run directly.
+
+**`__package__` Value**: This is the crucial difference! When using `python -m`, Python sets `__package__` to the full dotted path of the module's package: `"package.subpackage"`.
+
+## How Relative Imports Work with `python -m`
+
+Relative imports rely on `__package__`, not `__name__`. When you have:
+
+```python
+# In module.py
+from . import sibling_module
+from ..utils import helper
+```
+
+Python uses the `__package__` value (`"package.subpackage"`) to resolve the relative location. Since `__package__` is set correctly, the interpreter knows the module is part of that package and can properly resolve relative imports.
+
+## Contrast with Direct Script Execution
+
+If you ran:
+
+```bash
+python package/subpackage/module.py
+```
+
+You'd get:
+
+- `__name__ == "__main__"`
+- `__package__ == None`
+
+This makes Python unable to resolve relative imports like `from . import sibling_module`, because it doesn't consider the module to be inside a package.
+
+## Summary Table: `__name__` vs `__package__`
+
+| How You Run                           | `__name__`   | `__package__`          | Relative Imports |
+| ------------------------------------- | ------------ | ---------------------- | ---------------- |
+| `python -m package.subpackage.module` | `"__main__"` | `"package.subpackage"` | ✅ Works         |
+| `python package/subpackage/module.py` | `"__main__"` | `None`                 | ❌ Fails         |
+
+**Bottom Line**: Relative imports work with `-m` because `__package__` is set correctly, even though `__name__` is `"__main__"`.
 
 ## Package Context is Established:
 
@@ -177,47 +230,17 @@ This is the most crucial difference. Python treats app.py as being within a pack
 
 ## Relative Imports: These now work correctly. Because Python has established a package context for app.py (based on its location found via sys.path when using -m), it knows what "same level" (.) and "parent level" (..) refer to within that package structure.
 
-## Summary Table:
+## Summary Table: `python module.py` vs `python -m package.subpackage.module`
 
-Feature
+| Feature              | `python module.py` (Direct Script Execution)                                     | `python -m package.subpackage.module` (Module Execution)                           |
+| -------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **sys.path**         | Directory of `module.py` is added as first entry                                 | Current working directory is added. Python finds the module on `sys.path`          |
+| \***\*name\*\***     | `__main__`                                                                       | `__main__` (still set to `__main__` when executed directly)                        |
+| \***\*package\*\***  | `None`                                                                           | `"package.subpackage"` (key for relative imports!)                                 |
+| **Relative Imports** | ❌ Fails (`ImportError: attempted relative import with no known parent package`) | ✅ Works (relies on `__package__` for resolution)                                  |
+| **Primary Use Case** | Simple, single-file scripts; running executable entry points of a program        | Executing modules that are part of a package structure; testing package components |
 
-    python app.py 	(Direct Script Execution)						python -m app.py 	(Module Execution)
-
-    sys.path		Directory of app.py is added as first entry.    Current working directory is added. Python finds app.py as a module on sys.path.
-
-    __name__			__main__									Full dotted module name (e.g., my_package.app) or app if top-level.
-
-    Package Context		None. app.py is standalone.					Yes. app.py is treated as a module within a package context.
-
-    Relative Imports.   Fails (ImportError: attempted 				Works (if module path is valid)
-    					relative import with no known
-    					parent package)
-
-    Primary Use Case	Simple, single-file scripts;				Executing modules that are part of a package structure; testing package
-    					running executable entry points				components.
-    					of a program.
-
-Let's break down why python -m playlists.app gives you the **name** output you're seeing, and why python -m playlists/app.py is problematic (and results in **main**).
-
-## Understanding python -m
-
-The core purpose of python -m <module_name> is to run a module by its dotted path as found within Python's sys.path. It explicitly sets up the module's package context.
-
-## When you run python -m playlists.app:
-
-Module Resolution: Python searches sys.path for a module named playlists.app. This means it expects:
-
-A directory playlists on sys.path (or within a directory on sys.path).
-
-Inside that playlists directory, a file named app.py.
-
-## Package Context: When playlists.app is found this way, Python understands its position within the playlists package.
-
-**name** Value: If app.py correctly resolves as playlists.app within a package, its **name** should be set to 'playlists.app' when it's imported (e.g., from another module in the same package). However, when you execute a module directly using python -m, that module's **name** is specifically set to '**main**' for the duration of its execution as the top-level script, even though Python understands its full dotted path for resolving internal imports.
-
-This behavior is by design. The **main** guard (if **name** == '**main**':) relies on this to determine if a script is being run directly. If app.py is designed to be executable, it needs to see **name** as **main**.
-
-The crucial part is that despite **name** being '**main**', the package context for relative imports is correctly established. This means any from . import ... or from .. import ... imports within app.py or its imported sub-modules will resolve correctly, unlike when you run python app.py (which has no package context).
+## PYTHONPATH
 
 why does PYTHONPATH=. python playlists/app.py work? even for imports
 

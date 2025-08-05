@@ -1,3 +1,6 @@
+import sys
+print(f'Sys Path :: {sys.path}')
+
 import module_import_sys_path_python_path.module_import.common.find as find
 print(find.find_matching_friend(['Roe', 'Joe', 'Doe', 'Moe', 'Boe'], lambda x: x == 'Joe'))
 
