@@ -467,9 +467,128 @@ import asyncio
 asyncio.run(say_hi())
 ```
 
+❓First, What Is an Async Generator?
+
+```
+async def my_async_gen():
+    yield 1
+    yield 2
+```
+
+This defines an async generator function, which returns an async generator object.
+
+You consume it using async for, not await.
+
+⸻
+
+✅ Can You await an Async Generator?
+
+❌ No, you cannot directly await an async generator.
+
+If you try:
+
+```
+await my_async_gen()  # ❌ TypeError
+```
+
+You’ll get:
+
+```
+TypeError: 'async_generator' object is not awaitable
+```
+
+You must use:
+
+```
+async for val in my_async_gen():
+    print(val)
+```
+
+✅ Answer to Your Questions
+
+⸻
+
+🔹 1. Can we yield a value back to the caller while it is awaiting the generator?
+
+Yes — but the caller must be using async for to receive values.
+
+Example:
+
+```
+async def counter():
+    for i in range(3):
+        print(f"Yielding {i}")
+        yield i
+
+async def main():
+    async for val in counter():
+        print(f"Received: {val}")
+```
+
+So:
+• You’re not “awaiting the generator” per se.
+• The caller awaits each iteration of the generator with async for.
+
+⸻
+
+🔹 2. Can the caller send a value to the async generator using .send()?
+
+❌ Not really — this is not supported in Python’s async generators as of Python 3.13.
+
+While regular (sync) generators support .send() to inject values, async generators do not.
+
+If you try:
+
+```
+agen = counter()
+await agen.asend("hello")
+```
+
+It raises:
+
+```
+TypeError: can't send non-None value to a just-started async generator
+```
+
+Even after it starts, using .asend(val) is clunky and only works in very narrow cases. It’s rarely used and has limited support — Python explicitly discourages this.
+
+So:
+
+✅ Use yield to emit values
+❌ Do not expect to .send() values into an async generator
+
+⸻
+
+🧠 Why No send() for Async Generators?
+
+Because it would require the event loop to handle bidirectional streaming in a very precise way. This is complex and Python opted to keep async generators simpler — one-way flow only.
+
+```
+This is a design choice — async generators are meant for pull-style streams (e.g. async for), not push-pull interaction.
+```
+
+⸻
+
+✅ TL;DR
+
+```
+Question                                                        Answer
+--------------------------------------------------              --------------------------------------------------
+1. Can you await an async generator?                            ❌ No — use async for instead
+
+2. Can it yield values to the caller?                           ✅ Yes — via yield in async def, consumed by async for
+
+3. Can the caller send values back (.send())?                   ❌ No — async generators do not support .send()
+
+```
+
 ✅ 2. Generator-based Coroutines — using @types.coroutine (Legacy Style)
 
 Before async def, coroutines were built with yield + @coroutine.
+
+```
+The @coroutine decorator (from types or asyncio) predates async def and was introduced in Python 3.4, before async/await syntax existed.
+```
 
 ```
 from types import coroutine
@@ -495,6 +614,17 @@ async def main():
 import asyncio
 asyncio.run(main())
 ```
+
+🚨 Important Notes
+• @coroutine is deprecated since Python 3.8.
+• Removed from asyncio.coroutine in Python 3.11.
+• You should avoid it in new code and use async def with await or async for.
+
+⸻
+
+💡 Want Bidirectional Async Streams?
+
+Use asyncio.Queue to simulate a send/receive async channel — safe, modern, and works perfectly with async def.
 
 🔍 Summary Table
 
@@ -538,7 +668,99 @@ Think of it like a scheduler that:
 • Puts it aside and goes to the next ready task
 • Comes back later when the paused task can continue
 
+✅ 1. Do tasks run concurrently via cooperative multitasking?
+
+Yes.
+
+🔁 asyncio uses cooperative multitasking:
+• Each async def coroutine must explicitly yield control by hitting an await.
+• When that happens, the coroutine pauses itself, and the event loop decides what to do next:
+• Resume another coroutine that is ready.
+• Wait for an I/O event.
+• Handle timeouts, etc.
+
+So the task gives up control voluntarily by awaiting something — the event loop does not preempt it.
+
 ⸻
+
+❌ 2. Can the event loop suspend a task that is synchronous or blocking?
+
+No.
+
+🛑 The event loop cannot preempt or forcibly suspend a blocking synchronous function.
+
+That’s a key limitation of asyncio:
+• If a coroutine calls a blocking function (like time.sleep() or input()), it blocks the entire event loop.
+• The event loop can’t switch away from it — because it only works with tasks that cooperate.
+
+⸻
+
+Even though there’s only one event loop thread, multiple async tasks can run concurrently because they cooperate by yielding control when they are waiting (e.g., on I/O, sleep, or any awaitable).
+
+They don’t run in parallel on CPU, but they take turns running — that’s concurrency (not parallelism).
+
+⸻
+
+⚠️ Important Distinction
+
+```
+Term                                                Meaning in Python asyncio
+-------------------                                 -------------------------------------------------------
+1. Concurrency                                      Tasks switch off cooperatively (e.g., I/O waiting).
+2. Parallelism                                      True simultaneous execution on multiple cores/threads.
+                                                    Not provided by default in asyncio. Use concurrent.futures
+                                                    or multiprocessing for that.
+
+concurrency is not parallelism.
+```
+
+⸻
+
+✅ Definition of Concurrency
+
+Concurrency is when multiple tasks are in progress at the same time, but not necessarily running at the exact same moment.
+
+Instead of running simultaneously, the tasks take turns — switching between each other so fast that it seems like they’re happening at once.
+
+In Python asyncio, this happens via cooperative multitasking: each task voluntarily pauses (await) so others can run.
+
+⸻
+
+✅ Definition of Parallelism
+
+Parallelism is when multiple tasks are actually executing at the same time, on multiple cores or threads.
+
+This is real simultaneous execution — typical in multi-threading, multi-processing, or using multiple CPUs.
+
+⸻
+
+```
+🔁 Concurrency vs. 🧵 Parallelism
+
+
+Feature                      Concurrency                                    Parallelism
+------------------           ----------------------------------------       ------------------
+1. Execution                 Tasks interleave, not overlap                  Tasks run at the same time
+
+2. Threads/Cores             Can be single-threaded (e.g. asyncio)          Requires multiple threads/cores
+
+3, Use Case                  I/O-bound tasks                                CPU-bound tasks
+
+4. Example                   Async web scraping                             Video rendering on multiple cores
+
+```
+
+🧠 Analogy:
+
+Think of the event loop like a single waiter in a restaurant with many customers (tasks):
+• Each customer (async task) gives an order and waits.
+• While waiting for food (I/O), they say: “Come back later.”
+• The waiter serves the next customer.
+• Once the food is ready (e.g., file/HTTP/database is done), the waiter returns to the customer.
+
+So even though there’s only one waiter (event loop), multiple customers are handled concurrently — no one just blocks the waiter.
+
+---
 
 ✅ Basic Event Loop Flow 1. You define one or more coroutines (async def) 2. You submit them to the event loop 3. The loop starts running and manages when each coroutine is allowed to run next 4. When a coroutine awaits, it’s paused 5. The event loop resumes it later when it’s ready
 
