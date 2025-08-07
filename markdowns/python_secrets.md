@@ -432,6 +432,12 @@ Type						Reusable?						 Notes
 
 ### Explanation of the following Code which uses await with a generator object
 
+#### !! WARNING! This style of using coroutine as a generator is no longer supported in modern Python
+
+#### (i.e Python 3.6+), it is deprecated and should not be used at all
+
+#### Below is just code snippet to demonstrate how it used to work
+
 ```
 from collections import deque
 from types import coroutine
@@ -1057,40 +1063,45 @@ This error is a classic "rite of passage" when working with generator-based coro
 ### Example
 
 ```python
-def my_coroutine():
-    print("-> Coroutine started")
+def generator():
+    print("-> Generator started")
     value = yield
-    print(f"-> Coroutine received: {value}")
+    print(f"-> Generator received: {value}")
     yield
 
-co = my_coroutine()
+gen = generator()
 
 # This will cause the TypeError:
-# co.send("Hello")
+# gen.send("Hello")
 
-# Correct way: Prime the coroutine first
-print("Priming the coroutine...")
-next(co)  # or co.send(None)
-print("Coroutine is primed and waiting at the first yield.")
+# Correct way: Prime the Generator first
+print("Priming the generator...")
+next(gen)  # or gen.send(None)
+print("Generator is primed and waiting at the first yield.")
 
 # Now we can send a value
-print("Sending value to coroutine...")
-co.send("Hello")
+print("Sending value to generator...")
+gen.send("Hello")
 ```
 
 **Output:**
 
 ```
-Priming the coroutine...
--> Coroutine started
-Coroutine is primed and waiting at the first yield.
-Sending value to coroutine...
--> Coroutine received: Hello
+Priming the Generator...
+-> Generator started
+Generator is primed and waiting at the first yield.
+Sending value to generator...
+-> Generator received: Hello
+```
+
+```
+Above is a generator not a co-routine
 ```
 
 ### What is a Coroutine?
 
-> 🚀 **In Simple Terms:** Think of a coroutine as a “function that can take a break.” While normal functions run from start to finish without stopping, coroutines can pause (using `yield`), let other code run, and then pick up exactly where they left off when a value is sent back to them.
+> 🚀 **In Simple Terms:** Think of a coroutine as a “function that can take a break.” While normal functions run from start to finish without stopping, coroutines can pause (for ex: using `yield`), let other code run, and then pick up exactly where they left off when a value is sent back to them.
+> Co-routines can also use other strategies to pause for ex: await
 
 > 📘 **Why Use Coroutines?** They are incredibly efficient for handling asynchronous tasks, such as:
 >
@@ -1105,6 +1116,12 @@ Sending value to coroutine...
 Here is a simple coroutine that yields a value and then waits to receive a value back.
 
 ```python
+
+async def s_coroutine():
+    print('Coroutine started')
+    await asyncio.sleep(2)
+    print('Coroutine resumes working')
+
 def simple_coroutine():
     print("Coroutine started")
     x = yield 42  # Pauses here, returns 42, and waits for a value to be sent
