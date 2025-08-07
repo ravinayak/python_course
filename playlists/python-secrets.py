@@ -64,3 +64,55 @@ async def main():
     print(f'Exception :: {f.future.exception()}')
     
 asyncio.run(main())
+
+import asyncio
+import time
+
+async def co1():
+    print('Co-routine1 started')
+    [x ** 2 for x in range(2000000)]
+    print('Co-routine1 going to sleep for 1 seconds')
+    await asyncio.sleep(1)
+    print('Co-routine1 resumed after sleep and going to perform operation')
+    start = time.time()
+    [x ** 2 for x in range(200000000)]
+    print(f'Time taken :: {(time.time() - start):.3f} seconds')
+    print('Co-routine1 performed operation and now exiting')
+    return 1
+
+async def co2():
+    print('Co-routine2 started')
+    [x ** 2 for x in range(2000000)]
+    print('Co-routine2 going to sleep for 5 seconds')
+    start = time.time()
+    await asyncio.sleep(5)
+    print(f'Co-routine2 resumed after sleep and now exiting, time taken :: {(time.time() - start):.3f} seconds')
+    return 5
+    
+async def main():
+    # asyncio.gather runs tasks concurrently by starting the tasks all at once
+    results = await asyncio.gather(co1(), co2())
+    for res in results:
+        print(f'Res :: {res}')
+    
+asyncio.run(main())
+
+import asyncio
+import time
+
+class CustomAwaitable:
+    def __init__(self, limit):
+        self.limit = limit
+        
+    def __await__(self):
+        # We cannot use await inside __await__ method since it is not a coroutine
+        # there are ways around it though
+        yield
+        time.sleep(3)
+        print('Custom Awaitable await method finished')
+
+async def main():
+    ca = CustomAwaitable(10)
+    await ca
+    
+asyncio.run(main())
