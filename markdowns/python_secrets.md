@@ -1758,15 +1758,83 @@ CPU result: sqrt(1000000) = 1000.0
 They all return an UnsyncFuture, which supports:
 
 ```
+1. exception() method is not directly available on Unsync Future object, it must be accessed through the future object associated
+with the Unsync Future object
+
+2. add_done_callback(callback_fn) is also not directly available on Unsync Future object, it must be accessed through the future
+object associated with the Unsync Future object
+
+3. callback_fn takes Unsync Future object as an argument, and must be provided for the callback function to be correct
+
+4. Unfuture objects returned by @unsync should not be awaited directly unless you’re 100% sure they’re on the same loop (which is rarely true).
+
+5. await f => where f is of type Unsync Future will result in an error, we must not await f, we must wait through - f.result()
+```
+
+#### Code Sample below demonstrates how to use unsync library and these methods correctly:
+
+```
+import asyncio
+from unsync import unsync
+import time
+import math
+
+@unsync
+def sync_task(name):
+  print(f'Task started :: {name}')
+  print('Sleeping for 2 seconds - synchronous blocking - shall be executed using ThreadPoolExecutor')
+  time.sleep(2)
+  print('Exiting the synchronous method')
+  return f'Syncronous Task :: {name}'
+
+@unsync
+async def async_task(name):
+  print(f'Task started :: {name}')
+  print('Asynchronous sleep for 2 seconds - asyncronous non blocking - shall be executed in an async event loop')
+  await asyncio.sleep(2)
+  print('Exiting the async method')
+  return f'Asynchronous Task :: {name}'
+
+@unsync(process = True)
+def cpu_task(name, x):
+  print(f'Task started :: {name}')
+  print('Task performing cpu bound activity')
+  print(f'Sqrt(x) :: {math.sqrt(x)}')
+  print('Task exiting')
+  return f'CPU Task :: {name}'
+
+def callback_fn(fut):
+  print(f'This is a demo callback which will be called when the future completes with the result :: {fut.result()}')
+
+async def main():
+  futures = [
+		sync_task('Thread'),
+		async_task('Asyncio-Event-Loop'),
+		cpu_task('Cpu-Bound-Process', 200000)
+	]
+  for f in futures:
+    print(f'Callback shall be called when future completes :: {f.future.add_done_callback(callback_fn)}')
+    print(f'Type of future object :: {type(f)}')
+
+  for f in futures:
+    result = f.result()
+    print(f'Result of Task :: {result}')
+    print(f'Task done :: {f.done()}')
+    print(f'Exception :: {f.future.exception()}')
+
+asyncio.run(main())
+```
+
+```
 Method / Property                                   Meaning
 -----------------------------                       -----------------------------------------
 1. .result()                                        Wait and return the result (blocking)
 
 2. .done()                                          True if completed
 
-3. .exception()                                     Returns exception if raised
+3. .future.exception()                              Returns exception if raised
 
-4. .add_done_callback(fn)                           Call when future completes
+4. .future.add_done_callback(fn)                    Call when future completes
 
 ```
 
