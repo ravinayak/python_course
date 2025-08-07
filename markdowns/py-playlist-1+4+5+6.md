@@ -142,3 +142,6 @@
     => length = len(grades)
 35. friends = ['Ann', 'John', 'Wolf']
     => joined_str = ', '.join(friends)
+
+Errors
+![Errors](images/errors_list.png)
