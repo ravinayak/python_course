@@ -13,6 +13,7 @@ unsync = "*"
 aiohttp = "*"
 aiofiles = "*"
 bs4 = "*"
+async-timeout = "*"
 
 [dev-packages]
 

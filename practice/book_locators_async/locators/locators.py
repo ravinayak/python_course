@@ -1,0 +1,9 @@
+SECTION_LOCATOR = 'body#default div.container-fluid.page div.page_inner div.row div.col-sm-8.col-md-9 section'
+PAGER_LOCATOR = f'{SECTION_LOCATOR} div div ul.pager li.current'
+BOOKS_LOCATOR = f'{SECTION_LOCATOR} div ol.row li.col-xs-6.col-sm-4'
+BOOK_LOCATOR = 'article.product_pod'
+BOOK_HREF_LOCATOR = 'div.image_container a'
+BOOK_STAR_RATING_LOCATOR = 'p.star-rating'
+BOOK_TITLE_LOCATOR = 'img' # alt attribute
+BOOK_PRICE_LOCATOR = 'div.product_price p.price_color'
+BOOK_STOCK_LOCATOR = 'div.product_price p.instock.availability'
