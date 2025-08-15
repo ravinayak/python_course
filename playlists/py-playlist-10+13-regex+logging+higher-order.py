@@ -1,4 +1,12 @@
 import re
+import logging
+
+logging.basicConfig(format='%(asctime)s - %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
+                    datefmt='%d-%m-%Y %H-%M-%S',
+                    level=logging.INFO,
+                    filename='logs1.txt')
+
+logger = logging.getLogger('regex-higher-order-logging')
 
 def regex_ex():
     price = 'Price: $18,235.50'
@@ -45,4 +53,5 @@ def higher_order():
 if __name__ == '__main__':  
 	regex_ex()
 	greet(lambda: print('lambda function defined'))
+	logger.info('This is getting logged')
 	higher_order()
