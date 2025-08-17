@@ -41,6 +41,18 @@ A user-friendly string: 10
 [MyObject(value=10)]
 ```
 
+### Python Asycio | Threads | Processes
+
+```
+1. asyncio should be used for Managing Many Waiting Tasks. These are tasks which require waiting but are non-blocking. Consider
+network requests to fetch webpages. These are waiting tasks but do not block the event loop
+2. Threads are useful for Parallel Tasks that share data with Minimal CPU Usage. These are especially useful for tasks which
+require waiting but are also blocking. Consider reading/writing to Files. Another important point to consider is that these tasks
+do not require extensive CPU Usage
+3. Processes are useful for Tasks that require Maximizing Performance on CPU Intensive Tasks
+```
+
+
 ---
 
 ### Python Async Await Generators Coroutine
@@ -3220,3 +3232,19 @@ async def foo():
 future = foo()          # This runs foo in background thread
 result = future.result()  # Wait for foo to finish and get the result (42)
 ```
+
+ASYNCIO - NDL Conference - London
+
+![AsyncioEvent NDL-1](../images/NDL-Conf-1.png)
+
+![AsyncioEvent NDL-2](../images/NDL-Conf-2.png)
+
+![AsyncioEvent NDL-3](../images/NDL-Conf-3.png)
+
+![AsyncioEvent NDL-4](../images/NDL-Conf-4.png)
+
+![AsyncioEvent NDL-5](../images/NDL-Conf-5.png)
+
+![AsyncioEvent NDL-6](../images/NDL-Conf-6.png)
+
+![AsyncioEvent NDL-7](../images/NDL-Conf-7.png)
