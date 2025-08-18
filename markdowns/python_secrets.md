@@ -3233,6 +3233,259 @@ future = foo()          # This runs foo in background thread
 result = future.result()  # Wait for foo to finish and get the result (42)
 ```
 
+# 🎵 Poetry Command Cheat Sheet
+
+## 🔹 1. Project Setup
+```bash
+poetry new my_project
+```
+Creates a **new project structure** with `pyproject.toml`, tests, etc.
+
+```bash
+poetry init
+```
+Initializes a new Poetry project in an **existing folder**.
+
+---
+
+## 🔹 2. Dependency Management
+```bash
+poetry add requests
+```
+Adds `requests` as a dependency and updates `poetry.lock`.
+
+```bash
+poetry add requests@^2.30.0
+```
+Adds with version constraints.
+
+```bash
+poetry add --dev pytest
+```
+Adds a **development dependency** (e.g., test tools).
+
+```bash
+poetry remove requests
+```
+Removes a dependency cleanly.
+
+```bash
+poetry update
+```
+Updates all dependencies to their latest allowed versions.
+
+```bash
+poetry update requests
+```
+Updates only `requests`.
+
+---
+
+## 🔹 3. Virtual Environment Management
+```bash
+poetry install
+```
+Installs dependencies listed in `pyproject.toml`.
+
+```bash
+poetry env list
+```
+Shows all virtual environments Poetry created for the project.
+
+```bash
+poetry env use python3.11
+```
+Switches to a specific Python version for your venv.
+
+```bash
+poetry shell
+```
+Activates the virtual environment.
+
+```bash
+poetry run python main.py
+```
+Runs commands **inside the venv** without activating it manually.
+
+---
+
+## 🔹 4. Running & Testing
+```bash
+poetry run pytest
+```
+Runs tests with dependencies in venv.
+
+```bash
+poetry run jupyter notebook
+```
+Runs external tools inside the venv.
+
+---
+
+## 🔹 5. Lockfile Management
+```bash
+poetry lock
+```
+Regenerates `poetry.lock`.
+
+---
+
+
+## 📦 Poetry Packaging & Publishing — In Detail  
+
+## 1. `poetry build`
+```bash
+poetry build
+```
+
+### 🔹 What it does:
+- Compiles your project into **distributable formats** so it can be installed via `pip install` or uploaded to **PyPI**.  
+- By default, it creates two files inside the `dist/` folder:
+  - **Source Distribution (`.tar.gz`)**  
+    - Contains all raw project files (like source code, metadata, etc.).  
+    - This is the "classic" way of distributing Python packages.  
+  - **Wheel Distribution (`.whl`)**  
+    - A **binary format** optimized for fast installation.  
+    - Wheels don’t need to be built again on the user’s machine, so they install much faster.  
+
+### 🔹 Typical use case:
+You run this before publishing:
+```bash
+poetry build
+ls dist/
+# mypackage-0.1.0.tar.gz
+# mypackage-0.1.0-py3-none-any.whl
+```
+
+---
+
+## 2. `poetry publish`
+```bash
+poetry publish --username __token__ --password <pypi-token>
+```
+
+### 🔹 What it does:
+- Uploads the built distributions (from `dist/`) to **PyPI** or another configured registry.  
+- `--username __token__` is a special placeholder that tells PyPI you’re using an **API token** instead of a real username/password.  
+- `--password <pypi-token>` is where you pass the actual API token (generated from your PyPI account).  
+
+### 🔹 Options:
+- `--build` → Automatically runs `poetry build` before publishing.  
+- `--repository <name>` → Publish to a private repository instead of PyPI (configured via `poetry config`).  
+
+### 🔹 Example:
+```bash
+poetry publish --build --username __token__ --password pypi-AgEIcHlwaS5vcmc...
+```
+
+---
+
+## 3. `poetry config pypi-token.pypi <token>`
+```bash
+poetry config pypi-token.pypi <token>
+```
+
+### 🔹 What it does:
+- Saves your **PyPI API token** in Poetry’s **global config file** (so you don’t need to enter it every time).  
+- Location of the config file:
+  - Linux/macOS: `~/.config/pypoetry/config.toml`  
+  - Windows: `%APPDATA%\pypoetry\config.toml`  
+
+Once configured, you can just run:
+```bash
+poetry publish --build
+```
+…and Poetry will **use your saved token automatically**.  
+
+### 🔹 Example:
+```bash
+poetry config pypi-token.pypi pypi-AgEIcHlwaS5vcmcC...
+```
+
+---
+
+## 🔑 Publishing Flow (Best Practice)
+1. Update version number in `pyproject.toml`
+   ```toml
+   [tool.poetry]
+   name = "mypackage"
+   version = "0.2.0"
+   ```
+
+2. Build the package:
+   ```bash
+   poetry build
+   ```
+
+3. Configure your PyPI token (only once):
+   ```bash
+   poetry config pypi-token.pypi <your-token>
+   ```
+
+4. Publish:
+   ```bash
+   poetry publish --build
+   ```
+
+---
+
+✅ **In short**:  
+- `poetry build` → Prepares your package for distribution.  
+- `poetry publish` → Uploads it to PyPI (or private repo).  
+- `poetry config` → Saves credentials securely for automation.  
+
+
+---
+
+## 🔹 7. Config & Info
+```bash
+poetry show
+```
+Shows installed packages and versions.
+
+```bash
+poetry show requests
+```
+Shows detailed info about a package.
+
+```bash
+poetry config --list
+```
+Shows Poetry configuration (e.g., venv location).
+
+```bash
+poetry config virtualenvs.in-project true
+```
+Forces venvs to be created **inside the project** as `.venv/`.
+
+---
+
+## 🔹 8. Miscellaneous
+```bash
+poetry check
+```
+Validates your `pyproject.toml` and lock file.
+
+```bash
+poetry export -f requirements.txt --output requirements.txt
+```
+Exports dependencies for tools that only support `requirements.txt`.
+
+---
+
+# 🚀 Workflow Example
+```bash
+poetry new my_project
+cd my_project
+poetry add requests
+poetry add --dev pytest
+poetry install
+poetry run pytest
+poetry build
+poetry publish
+```
+
+
 ASYNCIO - NDL Conference - London
 
 ![AsyncioEvent NDL-1](../images/NDL-Conf-1.png)
@@ -3248,3 +3501,13 @@ ASYNCIO - NDL Conference - London
 ![AsyncioEvent NDL-6](../images/NDL-Conf-6.png)
 
 ![AsyncioEvent NDL-7](../images/NDL-Conf-7.png)
+
+![AsyncioEvent NDL-7](../images/NDL-Conf-8.png)
+
+![AsyncioEvent NDL-7](../images/NDL-Conf-9.png)
+
+![AsyncioEvent NDL-7](../images/NDL-Conf-10.png)
+
+![AsyncioEvent NDL-7](../images/NDL-Conf-11.png)
+
+![AsyncioEvent NDL-7](../images/NDL-Conf-12.png)
