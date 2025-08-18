@@ -1,0 +1,19 @@
+**************************** This is a message ****************************
+**************************** This is a message ****************************
+**************************** This is a message ****************************
+**************************** This is a message ****************************
+Item Found :: 141422324 for Method :: lucas
+**************************** This is a message ****************************
+**************************** This is a message ****************************
+**************************** This is a message ****************************
+**************************** This is a message ****************************
+**************************** This is a message ****************************
+**************************** This is a message ****************************
+Item Found :: 1001 for Method :: all_primes_till_x
+
+
+***** Printing Task Output Below *****
+
+Task Result :: 141422324
+Task Result :: Repititive Message function ended
+Task Result :: 1001
